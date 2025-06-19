@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Parada del Sol - Kioscos 24hs</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>    <header>
+        <nav class="navbar">
+            <div class="logo">La Parada del Sol</div>
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span class="nav-icon"></span>
+            </button>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#hero" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="#servicios" class="nav-link">Servicios</a></li>
+                <li class="nav-item"><a href="#kioscos" class="nav-link">Kioscos</a></li>
+                <li class="nav-item"><a href="#footer" class="nav-link">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero rediseñado -->
+        <section id="hero" class="hero">
+            <div class="slider-container">
+                <!-- Kiosco 1 -->
+                <article class="slide">
+                    <div class="slide-content">
+                        <h1>Kiosco Palermo 24hs</h1>
+                        <p>Atención 24hs en el corazón de Palermo, con snacks, bebidas frías y recargas al instante.</p>
+                        <a href="https://maps.google.com?q=kiosco+palermo+buenos+aires" class="cta" target="_blank" rel="noopener">Cómo llegar</a>
+                    </div>
+                    <div class="slide-bg" aria-hidden="true"></div>
+                </article>
+
+                <!-- Kiosco 2 -->
+                <article class="slide">
+                    <div class="slide-content">
+                        <h1>Kiosco Recoleta 24hs</h1>
+                        <p>Tu parada favorita en Recoleta, abierto toda la noche con productos frescos y atención cordial.</p>
+                        <a href="https://maps.google.com?q=kiosco+recoleta+buenos+aires" class="cta" target="_blank" rel="noopener">Cómo llegar</a>
+                    </div>
+                    <div class="slide-bg" aria-hidden="true"></div>
+                </article>
+
+                <!-- Kiosco 3 -->
+                <article class="slide">
+                    <div class="slide-content">
+                        <h1>Kiosco San Telmo 24hs</h1>
+                        <p>En el histórico barrio de San Telmo, ofrecemos golosinas, bebidas y todo lo que necesitas a cualquier hora.</p>
+                        <a href="https://maps.google.com?q=kiosco+san+telmo+buenos+aires" class="cta" target="_blank" rel="noopener">Cómo llegar</a>
+                    </div>
+                    <div class="slide-bg" aria-hidden="true"></div>
+                </article>
+
+                <!-- Kiosco 4 -->
+                <article class="slide">
+                    <div class="slide-content">
+                        <h1>Kiosco Caballito 24hs</h1>
+                        <p>Ubicado en el centro de Caballito, el kiosco de confianza que nunca cierra para servirte mejor.</p>
+                        <a href="https://maps.google.com?q=kiosco+caballito+buenos+aires" class="cta" target="_blank" rel="noopener">Cómo llegar</a>
+                    </div>
+                    <div class="slide-bg" aria-hidden="true"></div>
+                </article>                <!-- Indicadores -->
+                <div class="slider-indicators" role="tablist">
+                    <button class="indicator active" aria-label="Kiosco 1" role="tab"></button>
+                    <button class="indicator" aria-label="Kiosco 2" role="tab"></button>
+                    <button class="indicator" aria-label="Kiosco 3" role="tab"></button>
+                    <button class="indicator" aria-label="Kiosco 4" role="tab"></button>
+                </div>
+            </div>        </section>
+
+        <!-- Servicios mejorados -->
+        <section id="servicios" class="servicios">
+            <div class="container">
+                <h2 class="section-title">Servicios que ofrecemos</h2>
+                
+                <div class="servicios-grid">
+                    <article class="servicio-card">
+                        <div class="servicio-icon">
+                            <img src="kiosco/tiempo flexible.png" alt="Carga SUBE en kiosco 24hs de Buenos Aires" width="64" height="64">
+                        </div>
+                        <h3>Carga de SUBE</h3>
+                        <p>Cargá tu SUBE a cualquier hora. Sin filas ni esperas, ¡incluso a la madrugada!</p>
+                    </article>
+                    
+                    <article class="servicio-card">
+                        <div class="servicio-icon">
+                            <img src="kiosco/snacks.jpg" alt="Gran variedad de snacks y bebidas frías" width="64" height="64">
+                        </div>
+                        <h3>Snacks y bebidas</h3>
+                        <p>Amplia selección de golosinas, snacks y bebidas frías disponibles 24hs.</p>
+                    </article>
+                    
+                    <article class="servicio-card">
+                        <div class="servicio-icon">
+                            <img src="kiosco/personas.png" alt="Recargas de celular todas las compañías" width="64" height="64">
+                        </div>
+                        <h3>Recargas telefónicas</h3>
+                        <p>Recargá tu línea Personal, Movistar o Claro en cualquier momento del día.</p>
+                    </article>
+                    
+                    <article class="servicio-card">
+                        <div class="servicio-icon">
+                            <img src="kiosco/golosinas.jpeg" alt="Promociones y combos económicos" width="64" height="64">
+                        </div>
+                        <h3>Combos promocionales</h3>
+                        <p>Ofertas diarias y combos económicos que harán rendir tu dinero.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Medios de pago -->
+        <section id="pagos" class="pagos">
+            <div class="container">
+                <h2 class="section-title">Medios de pago que aceptamos</h2>
+                
+                <ul class="pagos-list">
+                    <li>
+                        <span class="pago-icon">💵</span>
+                        <span class="pago-text">Efectivo</span>
+                    </li>
+                    <li>
+                        <span class="pago-icon">💳</span>
+                        <span class="pago-text">Tarjetas de crédito/débito (Visa, Mastercard, AMEX)</span>
+                    </li>
+                    <li>
+                        <span class="pago-icon">📱</span>
+                        <span class="pago-text">Mercado Pago y billeteras virtuales</span>
+                    </li>
+                    <li>
+                        <span class="pago-icon">🏦</span>
+                        <span class="pago-text">Transferencias bancarias</span>
+                    </li>
+                    <li>
+                        <span class="pago-icon">🚌</span>
+                        <span class="pago-text">Tarjeta SUBE</span>
+                    </li>
+                </ul>
+            </div>
+        </section>        <!-- Nuestros Kioscos - Rediseño moderno -->
+        <section id="kioscos" class="kioscos">
+            <h2 class="section-title">Nuestros Kioscos</h2>
+            <div class="kiosco-grid">
+                <article class="kiosco-card" data-aos="fade-up">
+                    <div class="kiosco-header">
+                        <div class="kiosco-badge">24hs</div>
+                        <img src="kiosco/ali.jpg" alt="Kiosco La Parada del Sol en Palermo" class="kiosco-icon">
+                    </div>
+                    <div class="kiosco-content">
+                        <h3>Kiosco Palermo</h3>
+                        <p class="kiosco-direccion">Av. Coronel Díaz 1829</p>
+                        <p class="kiosco-descripcion">Ubicado en pleno Palermo Soho, con amplia variedad de snacks, bebidas frías y recarga SUBE instantánea.</p>
+                        <div class="kiosco-features">
+                            <span class="feature"><i class="feature-icon">🚌</i> Línea 39</span>
+                            <span class="feature"><i class="feature-icon">💳</i> Pago con tarjeta</span>
+                            <span class="feature"><i class="feature-icon">📱</i> Recargas</span>
+                        </div>
+                        <div class="kiosco-action">
+                            <a href="https://maps.google.com?q=kiosco+palermo+coronel+diaz+1829+buenos+aires" class="kiosco-btn" target="_blank" rel="noopener">
+                                <span class="btn-icon">📍</span>Cómo llegar
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="kiosco-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="kiosco-header">
+                        <div class="kiosco-badge">24hs</div>
+                        <img src="kiosco/ali png.png" alt="Kiosco La Parada del Sol en Recoleta" class="kiosco-icon">
+                    </div>
+                    <div class="kiosco-content">
+                        <h3>Kiosco Recoleta</h3>
+                        <p class="kiosco-direccion">Av. Santa Fe 2200</p>
+                        <p class="kiosco-descripcion">En el corazón de Recoleta, con productos de primera necesidad, bebidas heladas y recargas virtuales.</p>
+                        <div class="kiosco-features">
+                            <span class="feature"><i class="feature-icon">🚌</i> Línea 10, 67</span>
+                            <span class="feature"><i class="feature-icon">💳</i> Mercado Pago</span>
+                            <span class="feature"><i class="feature-icon">☕</i> Café</span>
+                        </div>
+                        <div class="kiosco-action">
+                            <a href="https://maps.google.com?q=kiosco+recoleta+santa+fe+2200+buenos+aires" class="kiosco-btn" target="_blank" rel="noopener">
+                                <span class="btn-icon">📍</span>Cómo llegar
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="kiosco-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="kiosco-header">
+                        <div class="kiosco-badge">24hs</div>
+                        <img src="kiosco/boxing.png" alt="Kiosco La Parada del Sol en San Telmo" class="kiosco-icon">
+                    </div>
+                    <div class="kiosco-content">
+                        <h3>Kiosco San Telmo</h3>
+                        <p class="kiosco-direccion">Defensa 701</p>
+                        <p class="kiosco-descripcion">Situado en el histórico barrio de San Telmo, con productos regionales y souvenirs para turistas.</p>
+                        <div class="kiosco-features">
+                            <span class="feature"><i class="feature-icon">🚌</i> Línea 29, 64</span>
+                            <span class="feature"><i class="feature-icon">🛍️</i> Souvenirs</span>
+                            <span class="feature"><i class="feature-icon">🧉</i> Mates</span>
+                        </div>
+                        <div class="kiosco-action">
+                            <a href="https://maps.google.com?q=kiosco+san+telmo+defensa+701+buenos+aires" class="kiosco-btn" target="_blank" rel="noopener">
+                                <span class="btn-icon">📍</span>Cómo llegar
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="kiosco-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="kiosco-header">
+                        <div class="kiosco-badge">24hs</div>
+                        <img src="kiosco/gym_11167215.png" alt="Kiosco La Parada del Sol en Caballito" class="kiosco-icon">
+                    </div>
+                    <div class="kiosco-content">
+                        <h3>Kiosco Caballito</h3>
+                        <p class="kiosco-direccion">Av. Rivadavia 4800</p>
+                        <p class="kiosco-descripcion">En el centro comercial de Caballito, con amplio surtido de productos, prensa y zona de café express.</p>
+                        <div class="kiosco-features">
+                            <span class="feature"><i class="feature-icon">🚌</i> Línea 5, 49</span>
+                            <span class="feature"><i class="feature-icon">📰</i> Prensa</span>
+                            <span class="feature"><i class="feature-icon">☕</i> Café express</span>
+                        </div>
+                        <div class="kiosco-action">
+                            <a href="https://maps.google.com?q=kiosco+caballito+rivadavia+4800+buenos+aires" class="kiosco-btn" target="_blank" rel="noopener">
+                                <span class="btn-icon">📍</span>Cómo llegar
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>        
+        
+        <!-- Mapa con ubicaciones -->
+        <section id="mapa" class="mapa">
+            <div class="container">
+                <h2 class="section-title">Encontranos en Buenos Aires</h2>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105073.44367080724!2d-58.503338793091856!3d-34.61566245827943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca3b4ef90cbd%3A0xa0b3812e88e88e87!2sBuenos%20Aires%2C%20CABA!5e0!3m2!1ses-419!2sar!4v1656543146972!5m2!1ses-419!2sar" 
+                        width="100%" 
+                        height="450" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+        <section id="ubicacion" class="ubicacion">
+            <div class="container">
+                <h2 class="section-title">Paradas de colectivos cercanas</h2>
+                
+                <div class="colectivos-grid">
+                    <article class="colectivo-card">
+                        <h3>Línea 39</h3>
+                        <p>A 50 metros - 1 minuto caminando</p>
+                        <p>Conecta Palermo con Microcentro</p>
+                    </article>
+                    
+                    <article class="colectivo-card">
+                        <h3>Línea 152</h3>
+                        <p>A 100 metros - 2 minutos caminando</p>
+                        <p>Conecta Palermo con Recoleta y Retiro</p>
+                    </article>
+                    
+                    <article class="colectivo-card">
+                        <h3>Línea 64</h3>
+                        <p>A 150 metros - 3 minutos caminando</p>
+                        <p>Conecta Palermo con Caballito</p>
+                    </article>
+                    
+                    <article class="colectivo-card">
+                        <h3>Línea 29</h3>
+                        <p>A 200 metros - 4 minutos caminando</p>
+                        <p>Conecta Palermo con La Boca y San Telmo</p>
+                    </article>
+                </div>
+                
+                <div class="cta-container">
+                    <button class="cta-button" id="servicios-cta">Descubrí más servicios</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Redes Sociales -->
+        <section id="redes" class="redes">
+            <div class="container">
+                <h2>Redes Sociales</h2>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">TikTok</a>
+            </div>
+        </section>
+
+        <!-- Trabajá con Nosotros -->
+        <section id="trabaja" class="trabaja">
+            <div class="container">
+                <h2>Trabajá con Nosotros</h2>
+                <form>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" required></textarea>
+
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Sobre nosotros -->
+        <section id="sobre-nosotros" class="sobre-nosotros">
+            <div class="container">
+                <h2>Sobre nosotros</h2>
+                <p>La Parada del Sol nació con la misión de estar siempre cerca de ti, ofreciendo productos de calidad y atención 24hs. Nuestra visión es ser el kiosco favorito de cada barrio, ruta y ciudad.</p>
+            </div>
+        </section>        <!-- Marcas con las que trabajamos -->
+        <section id="marcas" class="marcas">
+            <h2 class="section-title">Marcas con las que trabajamos</h2>
+            <div class="slider-container-full">
+                <div class="slider-marcas">
+                    <div class="marca"><img src="kiosco/ali.jpg" alt="Marca 1" class="marca-logo"></div>
+                    <div class="marca"><img src="kiosco/ali png.png" alt="Marca 2" class="marca-logo"></div>
+                    <div class="marca"><img src="kiosco/gym_11167215.png" alt="Marca 3" class="marca-logo"></div>
+                    <div class="marca"><img src="kiosco/boxing.png" alt="Marca 4" class="marca-logo"></div>
+                    <div class="marca"><img src="kiosco/ali.jpg" alt="Marca 5" class="marca-logo"></div>
+                    <div class="marca"><img src="kiosco/ali png.png" alt="Marca 6" class="marca-logo"></div>
+                    <div class="marca"><img src="kiosco/gym_11167215.png" alt="Marca 7" class="marca-logo"></div>
+                    <div class="marca"><img src="kiosco/boxing.png" alt="Marca 8" class="marca-logo"></div>
+                </div>
+            </div>
+        </section><!-- Redes sociales -->
+        <section id="redes" class="redes">
+            <div class="container">
+                <h2 class="section-title">Seguinos en redes</h2>
+                <div class="redes-grid">
+                    <a href="#" class="red-social">
+                        <span class="red-icon">📸</span>
+                        <span class="red-name">Instagram</span>
+                    </a>
+                    <a href="#" class="red-social">
+                        <span class="red-icon">�</span>
+                        <span class="red-name">Facebook</span>
+                    </a>
+                    <a href="#" class="red-social">
+                        <span class="red-icon">�</span>
+                        <span class="red-name">TikTok</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+          </main>
+    
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>La Parada del Sol</h3>
+                <p>Kioscos 24hs en Buenos Aires</p>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a href="#hero">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#kioscos">Nuestros kioscos</a></li>
+                    <li><a href="#pagos">Medios de pago</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contacto</h4>
+                <p><span>📞</span> (011) 4567-8900</p>
+                <p><span>✉️</span> info@paradadelsol.com.ar</p>
+                <p><span>⏰</span> Atención 24 horas</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 La Parada del Sol. Todos los derechos reservados.</p>
+        </div>
+    </footer>    <script src="main.js"></script>
+    <script>
+        // Slider infinito para marcas
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderMarcas = document.querySelector('.slider-marcas');
+            if (!sliderMarcas) return;
+            
+            // Duplicar las marcas para un efecto de scroll infinito más suave
+            const marcas = document.querySelectorAll('.marca');
+            marcas.forEach(marca => {
+                const clon = marca.cloneNode(true);
+                sliderMarcas.appendChild(clon);
+            });
+            
+            let scrollAmount = 0;
+            let isPaused = false;
+            
+            function moveSlider() {
+                if (isPaused) return;
+                
+                scrollAmount -= 0.7;
+                if (Math.abs(scrollAmount) >= sliderMarcas.scrollWidth / 2) {
+                    scrollAmount = 0;
+                }
+                
+                sliderMarcas.style.transform = `translateX(${scrollAmount}px)`;
+            }
+            
+            // Pausar animación cuando se hace hover sobre una marca
+            sliderMarcas.addEventListener('mouseenter', () => {
+                isPaused = true;
+            });
+            
+            sliderMarcas.addEventListener('mouseleave', () => {
+                isPaused = false;
+            });
+            
+            // Iniciar animación
+            setInterval(moveSlider, 16); // ~60fps para movimiento más suave
+        });
+    </script>
+</body>
+</html>

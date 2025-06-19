@@ -1,0 +1,1483 @@
+:root {
+    --primary-color: #ffcc00; /* Amarillo */
+    --secondary-color: #99cc00; /* Verde */
+    --text-color: #333;
+    --background-color: #f9f9f9;
+    --button-hover-color: #555;
+}
+
+/* Estilos generales */
+html, body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    max-width: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Asegurar que todos los elementos respeten el ancho de la pantalla */
+* {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Secciones centradas */
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Contenedor para cada sección */
+section .container {
+    background-color: var(--background-color);
+    border: 1px solid var(--text-color);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+    padding: 0.7rem 2rem;
+    background-color: rgba(255, 204, 0, 0.95);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Menú de navegación */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: var(--secondary-color);
+}
+
+/* Botón de hamburguesa para móvil */
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.nav-icon {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 3px;
+    background-color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.nav-icon::before,
+.nav-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.nav-icon::before {
+    top: -8px;
+}
+
+.nav-icon::after {
+    top: 8px;
+}
+
+/* Responsive para el navbar */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+        z-index: 1001;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: var(--primary-color);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease;
+        z-index: 1000;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .nav-item {
+        margin: 1.5rem 0;
+    }
+
+    .nav-link {
+        font-size: 1.3rem;
+    }
+    
+    /* Estilo para el toggle activo */
+    .nav-toggle.active .nav-icon {
+        background: transparent;
+    }
+    
+    .nav-toggle.active .nav-icon::before {
+        transform: rotate(45deg);
+        top: 0;
+    }
+    
+    .nav-toggle.active .nav-icon::after {
+        transform: rotate(-45deg);
+        top: 0;
+    }
+}
+
+/* Hero rediseñado con imagen de fondo */
+main {
+    padding-top: 60px; /* Espacio para el navbar fijo */
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animaciones para deslizamiento */
+.slide {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    will-change: opacity, transform;
+    transform-origin: center center;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 2;
+    transform: translateX(0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide.slide-left {
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide.slide-right {
+    transform: translateX(20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 2rem;
+    color: #fff;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    transform: translateZ(0); /* Optimización para mejora de rendimiento */
+}
+
+.slide-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+/* Fondos específicos para cada slide */
+.slide:nth-child(1) .slide-bg {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('kiosco/kiosco-24hs-rp.webp');
+}
+
+.slide:nth-child(2) .slide-bg {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('kiosco/kiosco-24hs-rp.webp');
+}
+
+.slide:nth-child(3) .slide-bg {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('kiosco/kiosco-24hs-rp.webp');
+}
+
+.slide:nth-child(4) .slide-bg {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('kiosco/kiosco-24hs-rp.webp');
+}
+
+.slide h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.slide p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.slide .cta {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.slide .cta:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* Slider con gestos */
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.slider-container:active {
+    cursor: grabbing;
+}
+
+/* Añadir indicador visual para dispositivos táctiles */
+.slider-container::after {
+    content: '← Desliza →';
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.5s ease;
+    animation: fadeOut 3s forwards 3s;
+}
+
+@keyframes fadeOut {
+    from { opacity: 0.8; }
+    to { opacity: 0; }
+}
+
+/* Indicadores */
+.slider-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background-color: var(--secondary-color);
+}
+
+/* Media queries para responsive design */
+@media (min-width: 768px) {
+    .slide h1 {
+        font-size: 3.5rem;
+    }
+
+    .slide p {
+        font-size: 1.5rem;
+    }    .slide .cta {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
+
+    .kiosco-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .kiosco-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Media queries para mejorar el hero en mobile */
+@media (max-width: 768px) {
+    .hero {
+        height: 80vh;
+        background-position: center;
+        padding: 1rem;
+    }
+    
+    .hero-content {
+        width: 90%;
+        padding: 1.5rem;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero .cta {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+/* Puntos de navegación */
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.slider-dots button {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.slider-dots button.active {
+    background-color: var(--secondary-color);
+}
+
+/* Nuestros Kioscos - Rediseño moderno */
+.kioscos {
+    padding: 4rem 2rem;
+    background-color: var(--background-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.kioscos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(120deg, rgba(255,204,0,0.05) 0%, rgba(153,204,0,0.05) 100%);
+    z-index: 0;
+}
+
+.kiosco-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.kiosco-card {
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    max-width: 450px;
+    margin: 0 auto;
+    will-change: transform, opacity;
+}
+
+.kiosco-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.kiosco-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.kiosco-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+    position: relative;
+    background: linear-gradient(to right, rgba(255,204,0,0.1), rgba(153,204,0,0.1));
+}
+
+.kiosco-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+
+.kiosco-badge {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background-color: var(--primary-color);
+    color: #333;
+    font-weight: bold;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transform: rotate(-5deg);
+    z-index: 2;
+}
+
+.kiosco-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.kiosco-card h3 {
+    color: var(--secondary-color);
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+.kiosco-direccion {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.kiosco-descripcion {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.kiosco-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.feature {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: rgba(153, 204, 0, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.feature-icon {
+    font-style: normal;
+}
+
+.kiosco-action {
+    margin-top: auto;
+}
+
+.kiosco-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.9rem 0;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.kiosco-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.kiosco-btn:hover::before {
+    left: 0;
+}
+
+.kiosco-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    color: #333;
+}
+
+/* Responsive para tarjetas */
+@media (min-width: 768px) {
+    .kiosco-card {
+        width: 100%;
+        max-width: none;
+    }
+
+    .kiosco-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+    
+    .kiosco-card.visible {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (min-width: 1200px) {
+    .kiosco-card {
+        width: 100%;
+    }
+
+    .kiosco-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    
+    .kiosco-card.visible {
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                    box-shadow 0.5s ease;
+    }
+    
+    .kiosco-content {
+        padding: 2rem 1.75rem;
+    }
+}
+
+/* Mejoras adicionales para desktop */
+@media (min-width: 992px) {
+    .kioscos {
+        padding: 5rem 3rem;
+    }
+    
+    .kiosco-card {
+        border-radius: 20px;
+    }
+    
+    .kiosco-card.visible:hover {
+        transform: translateY(-10px) scale(1.02);
+    }
+    
+    .kiosco-header {
+        padding: 1.75rem;
+    }
+    
+    .kiosco-icon {
+        width: 72px;
+        height: 72px;
+    }
+    
+    .kiosco-badge {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.8rem;
+    }
+    
+    .kiosco-card h3 {
+        font-size: 1.8rem;
+    }
+    
+    .kiosco-btn {
+        padding: 1rem 0;
+    }
+}
+
+/* Mapa embebido */
+.mapa {
+    padding: 2rem;
+    background-color: var(--background-color);
+}
+
+.mapa iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+}
+
+/* Sobre nosotros */
+.sobre-nosotros {
+    padding: 2rem;
+    background-color: var(--background-color);
+}
+
+.sobre-nosotros h2 {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+}
+
+.sobre-nosotros p {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+/* Productos Destacados */
+.productos-destacados .catalogo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.producto {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+
+/* Redes Sociales */
+.redes {
+    padding: 4rem 2rem;
+    background-color: #f7f9fc;
+}
+
+.redes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.red-social {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+}
+
+.red-social:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.red-icon {
+    font-size: 1.8rem;
+    margin-right: 1.5rem;
+}
+
+.red-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    .redes-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Testimonios */
+.testimonios blockquote {
+    font-style: italic;
+    color: var(--text-color);
+    margin: 1rem 0;
+}
+
+/* Galería */
+.galeria .imagenes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.galeria img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* Trabajá con Nosotros */
+.trabaja form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+.trabaja input, .trabaja textarea, .trabaja button {
+    padding: 0.5rem;
+    border: 1px solid var(--text-color);
+    border-radius: 5px;
+}
+
+.trabaja button {
+    background-color: var(--secondary-color);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.trabaja button:hover {
+    background-color: var(--button-hover-color);
+}
+
+/* Footer */
+footer {
+    background-color: #222;
+    color: #fff;
+    padding: 3rem 2rem 1rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-logo h3 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-logo p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+}
+
+.footer-links h4, .footer-contact h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-links h4::after, .footer-contact h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.7rem;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-contact p {
+    margin-bottom: 0.7rem;
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,0.7);
+}
+
+.footer-contact span {
+    margin-right: 0.7rem;
+}
+
+.footer-bottom {
+    padding-top: 1.5rem;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        grid-template-columns: 2fr 1fr 1fr;
+    }
+}
+
+/* Slider infinito para marcas */
+.marcas {
+    padding: 4rem 0;
+    background-color: #f8f8f8;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.slider-container-full {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-top: 3rem;
+}
+
+.slider-container-full::before,
+.slider-container-full::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.slider-container-full::before {
+    left: 0;
+    background: linear-gradient(to right, #f8f8f8, transparent);
+}
+
+.slider-container-full::after {
+    right: 0;
+    background: linear-gradient(to left, #f8f8f8, transparent);
+}
+
+.slider-marcas {
+    display: flex;
+    gap: 3rem;
+    overflow: visible;
+    white-space: nowrap;
+    padding: 1rem 0;
+    width: fit-content;
+}
+
+.marca {
+    flex: 0 0 auto;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 80px;
+}
+
+.marca-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.marca:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.marca:hover .marca-logo {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+/* Estilo para el título de sección */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* Sección de Servicios */
+.servicios {
+    padding: 4rem 1rem;
+    background-color: #fff;
+    position: relative;
+}
+
+.servicios::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.05));
+    pointer-events: none;
+}
+
+.servicios-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.servicio-card {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.servicio-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        60deg,
+        rgba(255,255,255,0) 20%,
+        rgba(255,255,255,0.1) 40%, 
+        rgba(255,255,255,0) 60%
+    );
+    transform: rotate(30deg);
+    transition: all 0.7s ease;
+}
+
+.servicio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.servicio-card:hover::after {
+    left: 100%;
+}
+
+.servicio-icon {
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.servicio-icon::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    opacity: 0.2;
+    transition: all 0.3s ease;
+}
+
+.servicio-card:hover .servicio-icon::before {
+    width: 70px;
+    height: 70px;
+    opacity: 0.4;
+}
+
+.servicio-icon img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--secondary-color);
+    padding: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.servicio-card:hover .servicio-icon img {
+    transform: scale(1.1);
+}
+
+.servicio-card h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.servicio-card h3::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 3px;
+    background-color: var(--primary-color);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.servicio-card p {
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Sección de Pagos */
+.pagos {
+    padding: 4rem 1rem;
+    background-color: #f9f9f9;
+    position: relative;
+}
+
+.pagos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+.pagos-list {
+    list-style: none;
+    padding: 0;
+    margin: 3rem 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.pagos-list li {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid transparent;
+}
+
+.pagos-list li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,204,0,0.1), transparent);
+    transition: all 0.5s ease;
+}
+
+.pagos-list li:hover {
+    border-left: 4px solid var(--secondary-color);
+}
+
+.pagos-list li:hover::before {
+    left: 100%;
+}
+
+.pago-icon {
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0,0,0,0.03);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.pagos-list li:hover .pago-icon {
+    background-color: var(--primary-color);
+}
+
+.pago-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.pagos-list li:hover .pago-text {
+    color: var(--secondary-color);
+}
+
+/* Sección de Ubicación */
+.ubicacion {
+    padding: 4rem 1rem;
+    background-color: #f0f8ff; /* Fondo celeste suave */
+    position: relative;
+}
+
+.ubicacion::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('kiosco/kiosco-24hs-rp.webp');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.ubicacion .container {
+    position: relative;
+    z-index: 1;
+}
+
+.colectivos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.colectivo-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--primary-color);
+}
+
+.colectivo-card:hover {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.colectivo-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.colectivo-card h3::before {
+    content: '🚌';
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.colectivo-card p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1.8rem;
+}
+
+/* CTA Button */
+.cta-container {
+    margin-top: 4rem;
+    text-align: center;
+    position: relative;
+}
+
+.cta-button {
+    padding: 1.2rem 2.5rem;
+    background: linear-gradient(135deg, var(--secondary-color), #6b9900);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        60deg,
+        rgba(255,255,255,0) 10%,
+        rgba(255,255,255,0.2) 20%, 
+        rgba(255,255,255,0) 30%
+    );
+    transform: rotate(30deg);
+    animation: shimmer 3s infinite linear;
+}
+
+.cta-button:hover {
+    background: linear-gradient(135deg, #6b9900, var(--primary-color));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Media Queries para Responsive Design */
+@media (min-width: 768px) {
+    .servicios-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .colectivos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pagos-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .servicios-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .colectivos-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .pagos-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Mejorar la visualización en dispositivos táctiles */
+@media (hover: none) {
+    .slider-container::after {
+        content: '← Desliza →';
+        display: block;
+    }
+}
+
+@media (hover: hover) {
+    .slider-container::after {
+        content: '';
+        display: none;
+    }
+}
