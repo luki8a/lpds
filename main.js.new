@@ -1,0 +1,615 @@
+// Hero Slider Functionality con deslizamiento
+document.addEventListener('DOMContentLoaded', function() {
+    // Elementos del slider
+    const sliderContainer = document.querySelector('.slider-container');
+    const slides = document.querySelectorAll('.slide');
+    const indicators = document.querySelectorAll('.indicator');
+    
+    // Variables para el gesto de deslizamiento
+    let startX;
+    let endX;
+    let isDragging = false;
+    let threshold = 100; // Cantidad mínima para cambiar slide
+    let dragOffset = 0; // Nuevo: para seguimiento de arrastre
+    
+    // Estado inicial
+    let currentSlide = 0;
+    let slideInterval;
+    let autoPlayEnabled = true;
+    
+    // Función para asegurar que el contenido esté centrado
+    function ensureCentered(slideElement) {
+        if (!slideElement) return;
+        
+        // Asegurar centrado del slide
+        slideElement.style.display = 'flex';
+        slideElement.style.justifyContent = 'center';
+        slideElement.style.alignItems = 'center';
+        
+        // Asegurar centrado del contenido
+        const slideContent = slideElement.querySelector('.slide-content');
+        if (slideContent) {
+            slideContent.style.margin = '0 auto';
+            slideContent.style.maxWidth = '1200px';
+            slideContent.style.width = '100%';
+        }
+    }
+    
+    // Mostrar slide activo con transición mejorada y centrado
+    function showSlide(index, direction = null) {
+        // Remover clase active de todos los slides e indicadores
+        slides.forEach(slide => {
+            slide.classList.remove('active');
+            slide.classList.remove('slide-left');
+            slide.classList.remove('slide-right');
+            
+            // Resetear estilos inline
+            slide.style.removeProperty('transform');
+            slide.style.removeProperty('left');
+            slide.style.removeProperty('right');
+            slide.style.removeProperty('margin');
+        });
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Validar índice
+        if (index < 0) {
+            currentSlide = slides.length - 1;
+        } else if (index >= slides.length) {
+            currentSlide = 0;
+        } else {
+            currentSlide = index;
+        }
+        
+        const slideToShow = slides[currentSlide];
+        
+        // Asegurarse de que el contenido está centrado incluso durante la animación
+        ensureCentered(slideToShow);
+        
+        // Aplicar clase de dirección si se proporciona
+        if (direction === 'left') {
+            slideToShow.classList.add('slide-left');
+        } else if (direction === 'right') {
+            slideToShow.classList.add('slide-right');
+        }
+        
+        // Activar slide actual e indicador después de un corto período
+        // para garantizar que las clases de dirección se apliquen primero
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                slideToShow.classList.add('active');
+                indicators[currentSlide].classList.add('active');
+            });
+        });
+    }
+    
+    // Funciones para cambiar slides
+    function prevSlide() {
+        showSlide(currentSlide - 1, 'left');
+    }
+    
+    function nextSlide() {
+        showSlide(currentSlide + 1, 'right');
+    }
+    
+    // Función para iniciar el intervalo automático
+    function startSlideInterval() {
+        if (autoPlayEnabled) {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+    }
+    
+    // Evento de click para los indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            // Detener el intervalo actual
+            clearInterval(slideInterval);
+            
+            // Determinar la dirección basada en la diferencia de índices
+            const direction = index > currentSlide ? 'right' : 'left';
+            
+            // Mostrar el slide correspondiente
+            showSlide(index, direction);
+            
+            // Reiniciar el intervalo
+            startSlideInterval();
+        });
+    });
+    
+    // Agregar lógica para gestos táctiles y arrastre con mouse
+    if (sliderContainer) {
+        // Eventos táctiles
+        sliderContainer.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            dragOffset = 0;
+        });
+        
+        sliderContainer.addEventListener('touchmove', e => {
+            if (!isDragging) return;
+            endX = e.touches[0].clientX;
+            dragOffset = endX - startX;
+        });
+        
+        sliderContainer.addEventListener('touchend', () => {
+            isDragging = false;
+            
+            if (Math.abs(dragOffset) > threshold) {
+                if (dragOffset > 0) {
+                    prevSlide();
+                } else {
+                    nextSlide();
+                }
+                
+                // Resetear el intervalo
+                clearInterval(slideInterval);
+                startSlideInterval();
+            }
+        });
+        
+        // Eventos de mouse
+        sliderContainer.addEventListener('mousedown', e => {
+            startX = e.clientX;
+            isDragging = true;
+            dragOffset = 0;
+            e.preventDefault(); // Evitar selección de texto
+        });
+        
+        window.addEventListener('mousemove', e => {
+            if (!isDragging) return;
+            endX = e.clientX;
+            dragOffset = endX - startX;
+        });
+        
+        window.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            if (Math.abs(dragOffset) > threshold) {
+                if (dragOffset > 0) {
+                    prevSlide();
+                } else {
+                    nextSlide();
+                }
+                
+                // Resetear el intervalo
+                clearInterval(slideInterval);
+                startSlideInterval();
+            }
+        });
+    }
+    
+    // Iniciar el slider
+    showSlide(0);
+    startSlideInterval();
+});
+
+// Menú de navegación responsive
+document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navbar = document.querySelector('.navbar');
+    
+    // Toggle para menú móvil
+    if (navToggle) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+    }
+    
+    // Efecto de scroll en la barra de navegación
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
+    // Cerrar menú al hacer clic en un enlace
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        });
+    });
+});
+
+// Animación de servicios al hacer scroll
+document.addEventListener('DOMContentLoaded', function() {
+    const serviciosCards = document.querySelectorAll('.servicio-card');
+    const pagoItems = document.querySelectorAll('.pago-item');
+    
+    // Verificar si IntersectionObserver es compatible con el navegador
+    if ('IntersectionObserver' in window) {
+        const options = {
+            root: null,
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+        
+        // Observar tarjetas de servicios
+        serviciosCards.forEach(card => {
+            observer.observe(card);
+        });
+        
+        // Observar items de pago
+        pagoItems.forEach(item => {
+            observer.observe(item);
+        });
+    } else {
+        // Fallback para navegadores más antiguos
+        serviciosCards.forEach(card => {
+            card.classList.add('visible');
+        });
+        
+        pagoItems.forEach(item => {
+            item.classList.add('visible');
+        });
+    }
+    
+    // Añadir estilos CSS para animaciones
+    document.head.insertAdjacentHTML('beforeend', `
+        <style>
+            .servicio-card {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+            
+            .servicio-card.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .servicio-card.visible {
+                animation: subtle-pulse 4s ease-in-out infinite;
+                animation-delay: 1s;
+            }
+            
+            .servicio-card.visible:hover {
+                animation-play-state: paused;
+            }
+        </style>
+    `);
+
+    // Efecto mejorado para los medios de pago
+    pagoItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.pago-icon');
+            icon.style.transform = 'scale(1.2) rotate(10deg)';
+            icon.style.transition = 'transform 0.3s ease';
+        });
+
+        item.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.pago-icon');
+            icon.style.transform = 'scale(1) rotate(0)';
+        });
+    });
+
+    // Efecto para los botones CTA
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    ctaButtons.forEach(button => {
+        button.addEventListener('mouseover', function() {
+            this.style.transition = 'all 0.3s ease';
+            this.style.transform = 'translateY(-3px)';
+        });
+        
+        button.addEventListener('mouseout', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+});
+
+// Kiosco Cards Animation
+document.addEventListener('DOMContentLoaded', function() {
+    // Elementos de las tarjetas de kioscos
+    const kioscoCards = document.querySelectorAll('.kiosco-card');
+    
+    // Función para animar las tarjetas al hacer scroll
+    function animateKioscoCards() {
+        // Usar IntersectionObserver para detectar cuando las tarjetas son visibles
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observar todas las tarjetas
+            kioscoCards.forEach(card => {
+                observer.observe(card);
+            });
+        } else {
+            // Fallback para navegadores que no soportan IntersectionObserver
+            kioscoCards.forEach(card => {
+                card.classList.add('visible');
+            });
+        }
+    }
+
+    // Añadir estilos de animación para las tarjetas
+    document.head.insertAdjacentHTML('beforeend', `
+        <style>
+            .kiosco-card {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+            
+            .kiosco-card.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            @media (prefers-reduced-motion: reduce) {
+                .kiosco-card {
+                    transition: none;
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    `);
+
+    // Iniciar animaciones
+    animateKioscoCards();
+});
+
+// Mapa interactivo moderno - Versión corregida
+document.addEventListener('DOMContentLoaded', function() {
+    // Verificar si la sección de mapa existe
+    const mapaContainer = document.getElementById('mapa-interactivo') || 
+                          document.querySelector('.map-container') || 
+                          document.querySelector('.mapa-wrapper');
+    
+    if (!mapaContainer) {
+        console.error('No se encontró el contenedor del mapa');
+        return;
+    }
+    
+    // Definir coordenadas de los kioscos (solo los primeros 3)
+    const locations = [
+        {
+            id: 1,
+            title: "La Parada del Sol 1",
+            address: "José León Suárez 3581, B1672 Villa Lynch, Provincia de Buenos Aires",
+            position: { lat: -34.5753, lng: -58.4818 }, // Villa Lynch
+            url: "https://www.google.com/maps?sca_esv=df20c8600aa448fe&output=search&q=la+parada+del+sol",
+            color: "#4CAF50", // Verde para Villa Lynch
+            barrio: "Villa Lynch"
+        },
+        {
+            id: 2,
+            title: "La Parada del Sol 2",
+            address: "Dr. Nicolás Repetto 4375, B1676BAI Santos Lugares, Provincia de Buenos Aires",
+            position: { lat: -34.5895, lng: -58.4835 }, // Santos Lugares
+            url: "https://www.google.com/maps/place/La+parada+del+sol+2/@-34.6000657,-58.5505683,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcb72ef7db9051:0xdd8247c6c2993d5e!8m2!3d-34.6000701!4d-58.5479934!16s%2Fg%2F11ycbbrgm2",
+            color: "#2196F3", // Azul para Santos Lugares
+            barrio: "Santos Lugares"
+        },
+        {
+            id: 3,
+            title: "La Parada del Sol 3",
+            address: "Dr. Amadeo Sabattini 4251, B1676BAI Caseros, 1675 Santos Lugares, Provincia de Buenos Aires",
+            position: { lat: -34.5710, lng: -58.4954 }, // Caseros
+            url: "https://www.google.com/maps/place/La+Parada+Del+Sol+3+Kiosco+24+hs/@-34.6024568,-58.5577301,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcb9aaee09fac9:0x3b494a6a98261f25!8m2!3d-34.6024612!4d-58.5551552!16s%2Fg%2F11w_ns6by7",
+            color: "#FF9800", // Naranja para Caseros
+            barrio: "Caseros"
+        }
+    ];
+    
+    // Mostrar directamente la alternativa con iframe para no depender de la API KEY
+    mostrarMapaAlternativo();
+    
+    // Inicializar interacción con la lista de kioscos
+    initKioscosList();
+    
+    // Función para mostrar un iframe con Google Maps
+    function mostrarMapaAlternativo() {
+        // Crear iframe con mapa embebido centrado en las coordenadas de los kioscos
+        const centerLat = -34.5827;
+        const centerLng = -58.4932;
+        
+        mapaContainer.innerHTML = `
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d26284.73197913275!2d-58.49821123863535!3d-34.58271035732748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1skiosco%20la%20parada%20del%20sol!5e0!3m2!1ses-419!2sar!4v1687911234567!5m2!1ses-419!2sar"
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Ubicaciones de kioscos La Parada del Sol en Buenos Aires">
+            </iframe>
+        `;
+        
+        // Añadir marcadores con un overlay HTML
+        const markerOverlay = document.createElement('div');
+        markerOverlay.className = 'marker-overlay';
+        markerOverlay.style.position = 'absolute';
+        markerOverlay.style.top = '0';
+        markerOverlay.style.left = '0';
+        markerOverlay.style.width = '100%';
+        markerOverlay.style.height = '100%';
+        markerOverlay.style.pointerEvents = 'none';
+        
+        // Agregar el overlay al contenedor del mapa
+        mapaContainer.style.position = 'relative';
+        mapaContainer.appendChild(markerOverlay);
+    }
+    
+    // Evento para los puntos de la ruta superior
+    document.querySelectorAll('.ruta-punto').forEach((punto, index) => {
+        punto.addEventListener('click', function() {
+            // Seleccionar todos los puntos y remover la clase active
+            document.querySelectorAll('.ruta-punto').forEach(p => {
+                p.classList.remove('active');
+            });
+            // Añadir clase active al punto actual
+            this.classList.add('active');
+            
+            // También resaltar el kiosco en la lista
+            highlightKioscoInList(index + 1);
+        });
+    });
+    
+    // Función para inicializar la interacción con la lista de kioscos
+    function initKioscosList() {
+        const kioscoListItems = document.querySelectorAll('.kiosco-lista-item');
+        
+        // Agregar eventos a los elementos de la lista
+        kioscoListItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                const kioscoId = parseInt(this.getAttribute('data-id'));
+                highlightRuta(kioscoId);
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                // Opcional: volver al estado normal si no hay selección activa
+                const activeRuta = document.querySelector('.ruta-punto.active');
+                if (!activeRuta) {
+                    document.querySelectorAll('.ruta-punto').forEach(p => {
+                        p.classList.remove('active');
+                    });
+                }
+            });
+            
+            item.addEventListener('click', function() {
+                const kioscoId = parseInt(this.getAttribute('data-id'));
+                // Activar el punto de ruta correspondiente
+                const rutaPunto = document.querySelector(`.ruta-punto[data-id="${kioscoId}"]`);
+                if (rutaPunto) {
+                    rutaPunto.click();
+                }
+                
+                // Efecto de selección en la lista
+                kioscoListItems.forEach(k => k.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // Si hay un kiosco activo en la ruta, resaltar también en la lista
+        const activeRutaPunto = document.querySelector('.ruta-punto.active');
+        if (activeRutaPunto) {
+            const kioscoId = parseInt(activeRutaPunto.getAttribute('data-id'));
+            highlightKioscoInList(kioscoId);
+        }
+    }
+    
+    // Función para resaltar un punto de ruta
+    function highlightRuta(id) {
+        document.querySelectorAll('.ruta-punto').forEach(punto => {
+            punto.classList.remove('active');
+        });
+        
+        const rutaPunto = document.querySelector(`.ruta-punto[data-id="${id}"]`);
+        if (rutaPunto) {
+            rutaPunto.classList.add('active');
+        }
+    }
+    
+    // Función para resaltar un kiosco en la lista
+    function highlightKioscoInList(id) {
+        document.querySelectorAll('.kiosco-lista-item').forEach(item => {
+            item.classList.remove('selected');
+        });
+        
+        const kioscoItem = document.querySelector(`.kiosco-lista-item[data-id="${id}"]`);
+        if (kioscoItem) {
+            kioscoItem.classList.add('selected');
+            // Hacer scroll al elemento si está fuera de la vista
+            kioscoItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+});
+
+// Animar los elementos de la lista de kioscos
+document.addEventListener('DOMContentLoaded', function() {
+    // Animar los elementos de la lista de kioscos
+    const kioscoListaItems = document.querySelectorAll('.kiosco-lista-item');
+    
+    kioscoListaItems.forEach(item => {
+        // Añadir clase para activar animación de entrada con retraso
+        setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+        }, 100 * parseInt(item.getAttribute('data-id') || 1));
+        
+        // Efectos de hover mejorados
+        item.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('selected')) {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                
+                // Efecto en el botón
+                const btn = this.querySelector('.kiosco-lista-btn');
+                if (btn) {
+                    btn.style.backgroundColor = '#f0f0f0';
+                }
+            }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            if (!this.classList.contains('selected')) {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+                
+                // Restaurar botón
+                const btn = this.querySelector('.kiosco-lista-btn');
+                if (btn) {
+                    btn.style.backgroundColor = '';
+                }
+            }
+        });
+    });
+});
+
+// Animación de entrada para elementos de pago
+document.addEventListener('DOMContentLoaded', function() {
+    const pagoItems = document.querySelectorAll('.pago-item');
+    
+    // Función para animar los elementos cuando entran en el viewport
+    function animatePagoItems() {
+        pagoItems.forEach(item => {
+            if (isElementInViewport(item) && !item.classList.contains('animated')) {
+                const delay = parseInt(item.getAttribute('data-aos-delay') || 0);
+                setTimeout(() => {
+                    item.classList.add('animated');
+                }, delay);
+            }
+        });
+    }
+    
+    // Comprobar si un elemento está en el viewport
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.bottom >= 0 &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
+            rect.right >= 0
+        );
+    }
+    
+    // Añadir evento de scroll
+    window.addEventListener('scroll', animatePagoItems);
+    
+    // Iniciar animación en la carga
+    animatePagoItems();
+});
